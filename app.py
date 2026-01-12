@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 
+# =========================
+# إعداد التطبيق
+# =========================
 app = Flask(__name__)
+app.secret_key = "secret-key-change-this"  # ضروري للـ flash messages
 
 # =========================
 # إعداد قاعدة البيانات
@@ -21,9 +25,16 @@ db = SQLAlchemy(app)
 # تعريف جدول الأسئلة
 # =========================
 class Question(db.Model):
+    __tablename__ = "question"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# =========================
+# إنشاء الجداول عند أول تشغيل
+# =========================
+with app.app_context():
+    db.create_all()
 
 # =========================
 # صفحة المستخدم
@@ -33,14 +44,23 @@ def index():
     if request.method == "POST":
         text = request.form.get("question", "").strip()
         if text:
-            q = Question(text=text)
-            db.session.add(q)
-            db.session.commit()
+            try:
+                q = Question(text=text)
+                db.session.add(q)
+                db.session.commit()
+                flash("تم إرسال السؤال بنجاح!", "success")
+            except Exception as e:
+                db.session.rollback()
+                flash(f"حدث خطأ في حفظ السؤال: {e}", "danger")
+        else:
+            flash("لا يمكن إرسال سؤال فارغ!", "warning")
         return redirect(url_for("index"))
-    return render_template("index.html")
+
+    questions = Question.query.order_by(Question.created_at.desc()).all()
+    return render_template("index.html", questions=questions)
 
 # =========================
-# صفحة الأدمن
+# صفحة الأدمن (بدون تسجيل دخول)
 # =========================
 @app.route("/admin")
 def admin():
@@ -51,6 +71,4 @@ def admin():
 # تشغيل التطبيق
 # =========================
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()  # ينشئ الجدول تلقائياً إذا لم يكن موجوداً
     app.run(host="0.0.0.0", port=5000, debug=True)
