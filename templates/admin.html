@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الأسئلة</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>لوحة إدارة الأسئلة</h1>
+            <p>هنا يمكنك متابعة جميع الأسئلة المقدمة من المستخدمين مع تاريخ ووقت الإرسال.</p>
+        </header>
+
+        <section class="admin-table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>السؤال</th>
+                        <th>تاريخ الإرسال</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for q in questions %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ q.text }}</td>
+                        <td>{{ q.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

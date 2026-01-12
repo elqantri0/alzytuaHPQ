@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة هولت برايز</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}"  class="logo">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}"  class="logo">
+            <h1>إذا كان لديك أي سؤال عن مسابقة هولت برايز في جامعة الزيتونة، تفضل بالسؤال وسنجاوب على كل الأسئلة. لا تقلق، لا يمكننا معرفة الشخص الذي يطرح السؤال.</h1>
+        </div>
+    </header>
+<section class="ask-section">
+    <form method="POST">
+        <textarea name="question" placeholder="اكتب سؤالك هنا..." required></textarea>
+        <button type="submit">إرسال السؤال</button>
+    </form>
+    <div class="extra-buttons">
+        <a href="https://hultprize-alzaytouna.onrender.com/" target="_blank" class="btn">الموقع الرسمي للمسابقة</a>
+        <a href="https://wa.me/218930550462" class="btn">تواصل معنا</a>
+    </div>
+</section>
+<footer class="site-footer">
+    <p>&copy; 2026 جامعة الزيتونة - مسابقة هولت برايز , المسؤول التنقي عبد العظيم القنطري. جميع الحقوق محفوظة.</p>
+    <div class="footer-links">
+        <a href="https://hultprize-alzaytouna.onrender.com/" target="_blank">الموقع الرسمي</a>
+        <a href="https://wa.me/218930550462">تواصل معنا</a>
+    </div>
+</footer>
+
+
+</body>
+</html>
