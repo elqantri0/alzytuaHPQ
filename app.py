@@ -40,7 +40,7 @@ def index():
     return render_template("index.html")
 
 # =========================
-# صفحة الأدمن (بدون تسجيل دخول)
+# صفحة الأدمن
 # =========================
 @app.route("/admin")
 def admin():
@@ -52,5 +52,5 @@ def admin():
 # =========================
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()
+        db.create_all()  # ينشئ الجدول تلقائياً إذا لم يكن موجوداً
     app.run(host="0.0.0.0", port=5000, debug=True)
