@@ -8,7 +8,7 @@ app = Flask(__name__)
 # =========================
 # إعداد قاعدة البيانات
 # =========================
-DATABASE_URL = os.environ.get("DATABASE_URL")  # Render يعطيك رابط القاعدة
+DATABASE_URL = os.environ.get("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL غير معرف")
 
@@ -40,7 +40,7 @@ def index():
     return render_template("index.html")
 
 # =========================
-# صفحة الأدمن
+# صفحة الأدمن (بدون تسجيل دخول)
 # =========================
 @app.route("/admin")
 def admin():
@@ -48,9 +48,9 @@ def admin():
     return render_template("admin.html", questions=questions)
 
 # =========================
-# تشغيل السيرفر محليًا
+# تشغيل التطبيق
 # =========================
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()  # ينشئ الجدول إذا لم يكن موجود
+        db.create_all()
     app.run(host="0.0.0.0", port=5000, debug=True)
